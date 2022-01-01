@@ -12,13 +12,13 @@ const Header = (props) => {
 const Content = (props) => {
   return (
     <>
-      {props.parts.map(part => <p key={part.name}>{part.name} {part.exercise}</p>)}
+      {props.parts.map(part => <p key={part.name}>{part.name} {part.exercises}</p>)}
     </>
   )
 }
 const Footer = (props) => {
   let sum = 0;
-  props.exercises.forEach(exercise => sum += exercise)
+  props.exercises.forEach(part => sum += part.exercises)
   return (
     <>
       <p>Number of exercises {sum} </p>
@@ -27,19 +27,45 @@ const Footer = (props) => {
 }
 
 const App = () => {
-  const course = 'Half stack application development'
-  const part1 = 'Fundamentals of React'
-  const exercises1 = 10
-  const part2 = 'Using props to pass data'
-  const exercises2 = 7
-  const part3 = 'state of component'
-  const exercises3 = 14
+  const course = {
+    name: 'Half Stack application development',
+    parts: [
+      {
+        name: 'Fundamentals of React',
+        exercises: 10
+      },
+      {
+        name: 'Using props to pass data',
+        exercises: 7
+      },
+      {
+        name: 'State of a component',
+        exercises: 14
+      }
+    ]
+  }
+
+  class Person {
+    constructor(name, age) {
+      this.name = name
+      this.age = age
+    }
+
+    greet() {
+      console.log('Hello, my name is ' + this.name)
+    }
+  }
+  const adam = new Person('Adam', 34)
+  adam.greet()
+
+  const janja = new Person('Janja Garnbret', 22)
+  janja.greet()
 
   return (
     <div>
-     <Header course={course} />
-      <Content parts={[{name: part1, exercise: exercises1}, {name: part2, exercise: exercises2}, {name: part3, exercise: exercises3}]} />
-      <Footer exercises={[exercises1, exercises2, exercises3]}  />
+     <Header course={course.name} />
+      <Content parts={course.parts} />
+      <Footer exercises={course.parts}  />
     </div>
   )
 }
